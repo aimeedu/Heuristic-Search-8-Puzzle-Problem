@@ -13,6 +13,7 @@ public class Puzzle{
     // Map<List<Integer>, Node> open_map, close_map; // <board, f_value>
     // PriorityQueue<Node> open, close;
     TreeSet<Node> open, close;
+    // TreeMap<List<Integer>, Node> open, close;
 
     // constructor
     public Puzzle(int dim, List<Integer> goal_arr, List<Integer> start_arr){
@@ -108,18 +109,20 @@ public class Puzzle{
             System.out.println("\n"+g+"------------------------");
             // first() Returns the first (lowest) element currently in this set. not remove yet.
             Node cur = open.first(); // get the best node in the open list. least f(n). 
-            System.out.println("\nBoard with least f = "+cur.f+cur.toString());
-            open.remove(cur);
-            close.add(cur); // expand
-
-            System.out.println("open list: "+ open);
-            System.out.println("close list: "+ close);
 
             if (cur.equals(goal_node)){
                 end = true;
                 System.out.println("Found path with " + g + " Steps!");
                 return; // we want to return sequence of Node.
             }else{
+                System.out.println("\nBoard with least f = "+cur.f+cur.toString());
+                open.remove(cur);
+                close.add(cur); // expand
+    
+                System.out.println("open list: "+ open);
+                System.out.println("close list: "+ close);
+                System.out.println("\n");
+
                 g++; // take one more step to check neighbors.
                 
                 // build all neighbor's board after move the white tile, and check one by one.
