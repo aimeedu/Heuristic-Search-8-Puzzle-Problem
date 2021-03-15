@@ -30,9 +30,9 @@ public class Node implements Comparable<Node>{
     // calculate Misplaced heuristics
     public int h_misplaced(List<Integer> goal, List<Integer> board, int g){
         int h = 0;
-        for(int i=0; i<goal.size(); i++){
-            int tile = goal.get(i);
-            if(tile != 0 && tile != board.get(i)){
+        for(int i=0; i<board.size(); i++){
+            int tile = board.get(i);
+            if(tile != 0 && tile != goal.get(i)){
                 h++;
             }
         }
@@ -57,14 +57,9 @@ public class Node implements Comparable<Node>{
         }
         this.h = h;
         this.f = h + g;
-        // System.out.println("h = " + this.h);
+        System.out.println("h = " + this.h +", g="+this.g+ ", f = " + this.f);
         return this.h;
     }
-
-    // @Override
-    // public int compare(Node b1, Node b2) {
-    //     return b1.f - b2.f;
-    // }
 
     @Override 
     public String toString(){
@@ -83,6 +78,7 @@ public class Node implements Comparable<Node>{
     public boolean equals(Object obj) {
         Node n = (Node) obj;
         for(int i=0; i<this.board.size(); i++){
+            // System.out.println(this.board.get(i) + " " + n.board.get(i));
             if (this.board.get(i) != n.board.get(i)) return false;
         }
         return true;
@@ -90,7 +86,15 @@ public class Node implements Comparable<Node>{
 
     @Override
     public int compareTo(Node n) {
-        return this.f-n.f;
-
+        if (this.equals(n)) {
+            return 0;
+        }
+        else{
+            if (this.f != n.f) {
+                // System.out.println(this.f + this.board.toString()+" <- " +n.f + n.board.toString());
+                return this.f-n.f;
+            }
+            else return 1;
+        }
     }
 }
